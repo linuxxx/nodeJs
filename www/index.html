@@ -144,7 +144,9 @@
 $(function() {
   $(".user-info a:last-child").click(function(event) {
     $.popup("退出成功",function(){
-      location.href = "ask.html"
+      $.popup("已退出",function(){
+        location.href = "ask.html"
+      });
     });
   });
 });

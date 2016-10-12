@@ -22,8 +22,12 @@
           this.remove();
         });
         $(".mask").fadeOut('fast', function() {
-          callback();
-          this.remove();
+          // console.log( typeof callback )
+          if( typeof callback  == "function"){            
+            callback();
+            // setTimeout(callback,1000)
+          }
+          this.remove();           
         });
       })
 
