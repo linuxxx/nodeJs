@@ -4,12 +4,8 @@
       // this.each(function() {
 
       // });
-      $(".popup").fadeOut('fast', function() {
-        this.remove();
-      });
-      $(".mask").fadeOut('fast', function() {
-        this.remove();
-      });
+      $(".popup").remove();
+      $(".mask").remove();
       // 声明变量插入内容
       var html = "<div class=\"popup popup01\">" + "  <div class=\"pop-close\">x</div>" + "  <div class=\"pop-title\">提示信息</div>" + "  <div class=\"pop-content\">注册成功</div>" + "</div>" + "<div class=\"mask\"></div>";
       $("body").append(html);
@@ -22,12 +18,12 @@
           this.remove();
         });
         $(".mask").fadeOut('fast', function() {
+          this.remove();           
           // console.log( typeof callback )
           if( typeof callback  == "function"){            
             callback();
             // setTimeout(callback,1000)
           }
-          this.remove();           
         });
       })
 
