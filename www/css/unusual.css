@@ -1,0 +1,44 @@
+
+audio, canvas, progress, video { display:inline-block; vertical-align:baseline }
+audio:not([controls]) { display:none; height:0 }
+
+/*form标签*/
+button, input, select, textarea { /*margin:0; padding:0; border:1px; outline:none; border-radius:0;*/ }
+input:focus, textarea:focus { outline:none }
+input::-webkit-input-placeholder { font-size:12px; color:#aeaeae; }
+input:-moz-placeholder { font-size:12px; color:#aeaeae; }
+input::-moz-placeholder { font-size:12px; color:#aeaeae; }
+input:-ms-input-placeholder { font-size:12px; color:#aeaeae; }
+map, map area { outline:none; }
+
+/*form不常用标签*/
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor:pointer; -webkit-appearance:button; }
+button::-moz-focus-inner, input::-moz-focus-inner { border:0; padding:0; }
+textarea { overflow:auto; vertical-align:top; resize:none }
+input:focus, textarea:focus { outline:none }
+input[type="search"] { -webkit-appearance:textfield; -webkit-box-sizing:content-box; -moz-box-sizing:content-box; box-sizing:content-box }
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { }
+input::-ms-clear { display:none }
+[placeholder]:focus::-webkit-input-placeholder { -webkit-transition:opacity 0.5s ease; -moz-transition:opacity 0.5s ease; transition:opacity 0.5s ease; opacity:0 }
+[placeholder]:focus::-moz-input-placeholder { -webkit-transition:opacity 0.5s ease; -moz-transition:opacity 0.5s ease; transition:opacity 0.5s ease; opacity:0 }
+
+::selection { background-color:#38485a; color:#fff; text-shadow:0 1px 0 rgba(0,0,0,0.3) }
+::-moz-selection { background-color:#38485a; color:#fff; text-shadow:0 1px 0 rgba(0,0,0,0.3) }
+img::selection { background:transparent }
+img::-moz-selection { background:transparent }
+
+
+/*不常用标签*/
+blockquote, q { quotes:none }
+blockquote:before, blockquote:after, q:before, q:after { content:''; content:none }
+[hidden] {display:none }
+abbr[title] { /*border-bottom:1px dotted*/ }
+dfn { font-style:italic }
+mark { background:#ff0; color:#000 }
+sub, sup { font-size:75%; line-height:0; position:relative; vertical-align:baseline }
+sup { top:-0.5em }
+sub { bottom:-0.25em }
+svg:not(:root) { overflow:hidden }
+figure { margin:0 }
+video, object, embed, iframe { width:100% }
+
