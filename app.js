@@ -22,6 +22,7 @@ app.use(cookieParser());
 
 app.get('', (req, res) => {
   console.log('这是根目录');
+  res.json({"code":"",{}})
 })
 
 app.listen(3000, () => {
