@@ -12,7 +12,41 @@
   <link rel="stylesheet " type="text/css " href="css/style.css " />
   <script src='js/jquery-2.0.3.js'></script>
   <script src='js/popupInsert.js'></script>
+  <script src='js/jquery.cookie.js'></script>
   <script src='js/index.js'></script>
+  <script type="text/javascript">
+  $(function() {
+    var name = $.cookie("name");
+    if (name) {
+      $(".user-name").html('<span class="glyphicon glyphicon-user"></span>' + name).addClass("online");
+    } else {
+      $(".user-name").html('<span class="glyphicon glyphicon-user"></span>登陆');
+    }
+    // 控制用户下拉，如果同有登陆跳登陆页面
+    $("body").on("click", ".user-name", function() {
+      if ($(this).hasClass("online")) {
+        $(".user-info").css({
+          top: 50 + "px",
+          right: -7 + "px"
+        });
+        $(".user-info").slideToggle();
+      } else {
+        location.href = "/login.html";
+      }
+    });
+     $(".user-info a:first-child").click(function() {
+       location.href = "/upload.html";
+     });
+    $(".user-info a:last-child").click(function(event) {
+      $.cookie("name", name, {
+        expires: -1
+      });
+      $.popup("退出成功", function() {
+        location.href = "/index.html";
+      });
+    });
+  });
+  </script>
 </head>
 
 <body>
@@ -141,15 +175,6 @@
   </main>
 </body>
 <script type="text/javascript">
-$(function() {
-  $(".user-info a:last-child").click(function(event) {
-    $.popup("退出成功",function(){      
-        $.popup("已退出",function(){
-          location.href = "ask.html"
-        })
-    });
-  });
-});
 </script>
 
 </html>

@@ -1,2 +1,34 @@
-users文件夹   存放用户
+﻿users文件夹   存放用户
 questions 文件夹 存放问答
+
+3. // 可以把表单里的所有内容都读出来形成一个字符串
+   console.log( $(this).serialize() );
+4. // 把表单里的所有内容都读出来放在一个数组里
+   console.dir( $(this).serializeArray() );
+
+5. res.status(200).json({"code":"error","content":"密码输入不致！"});
+
+响应一个json数据   ajax接收就发过来的json数据
+
+
+6.
+var data = new FormData(this);
+ $.ajax({
+	url:'/user/photo',
+	data:data,
+	contentType: false,
+	processData: false,
+	type:"POST",
+	success:function(){
+
+	}
+})
+
+fs.appendFile()
+
+fs.readdir("目录",(err,files) =>{
+	
+})
+
+fs.writeFile()
+
