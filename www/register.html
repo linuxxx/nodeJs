@@ -2,8 +2,8 @@
 <html>
 
 <head>
-  <title>注册-问答首页</title>
   <meta charset="utf-8">
+  <title>注册-问答首页</title>
   <meta name="Keywords " content="$SiteKeywords " />
   <meta name="Description " content="$SiteDescription " />
   <link rel="stylesheet " type="text/css " href="css/bootstrap.min.css" />
@@ -13,36 +13,9 @@
   <script src='js/jquery-2.0.3.js'></script>
   <script src='js/popupInsert.js'></script>
   <script src='js/index.js'></script>
+  <!-- 当前页js -->
+  <script type="text/javascript" src="script/reg.js"></script>
   <script type="text/javascript">
-  $(function() {
-    // 拦截form表单的提交事件
-    $("form").submit(function(ev) {
-      //阻止默认事件
-      ev.preventDefault();
-      // 可以把表单里的所有内容都读出来形成一个字符串
-      var data = $(this).serialize();
-      // 把表单里的所有内容都读出来放在一个数组里
-      // console.dir( $(this).serializeArray() );
-
-      // ajax 发送请求
-      $.post('user/register', data, function(res, statusText, xhr) {
-        if (statusText == "success") {
-          // console.log(res)
-          if (res.code == "success") {
-            $.popup(res.content, function() {
-              location.href = "/login.html";
-            })
-          } else {
-            $.popup(res.content);
-          }
-
-        }
-
-      })
-
-    });
-
-  });
   </script>
 </head>
 
@@ -50,11 +23,6 @@
   <div class="h50"></div>
   <div id="nav">
     <nav class="nav">
-      <!-- 用户下拉 -->
-      <div class="user-info" style="display: none">
-        <a href="javascript:;">个人资料</a>
-        <a href="javascript:;">退出</a>
-      </div>
       <div class="back"><span class="glyphicon glyphicon-chevron-left"></span></div>
       <div class="title">注册</div>
       <div class="user"><span class="glyphicon glyphicon-home fs18"></span>

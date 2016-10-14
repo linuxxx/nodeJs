@@ -20,7 +20,6 @@ var data = new FormData(this);
 	processData: false,
 	type:"POST",
 	success:function(){
-
 	}
 })
 

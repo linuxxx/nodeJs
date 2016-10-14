@@ -2,8 +2,8 @@
 <html>
 
 <head>
-  <title>问答首页</title>
   <meta charset="utf-8">
+  <title>问答首页</title>
   <meta name="Keywords " content="$SiteKeywords " />
   <meta name="Description " content="$SiteDescription " />
   <link rel="stylesheet " type="text/css " href="css/bootstrap.min.css" />
@@ -13,40 +13,10 @@
   <script src='js/jquery-2.0.3.js'></script>
   <script src='js/popupInsert.js'></script>
   <script src='js/jquery.cookie.js'></script>
+  <!-- 公用js -->
   <script src='js/index.js'></script>
-  <script type="text/javascript">
-  $(function() {
-    var name = $.cookie("name");
-    if (name) {
-      $(".user-name").html('<span class="glyphicon glyphicon-user"></span>' + name).addClass("online");
-    } else {
-      $(".user-name").html('<span class="glyphicon glyphicon-user"></span>登陆');
-    }
-    // 控制用户下拉，如果同有登陆跳登陆页面
-    $("body").on("click", ".user-name", function() {
-      if ($(this).hasClass("online")) {
-        $(".user-info").css({
-          top: 50 + "px",
-          right: -7 + "px"
-        });
-        $(".user-info").slideToggle();
-      } else {
-        location.href = "/login.html";
-      }
-    });
-     $(".user-info a:first-child").click(function() {
-       location.href = "/upload.html";
-     });
-    $(".user-info a:last-child").click(function(event) {
-      $.cookie("name", name, {
-        expires: -1
-      });
-      $.popup("退出成功", function() {
-        location.href = "/index.html";
-      });
-    });
-  });
-  </script>
+  <!-- 当前页js -->
+  <script type="text/javascript" src="script/index.js"></script>
 </head>
 
 <body>
@@ -59,122 +29,17 @@
         <a href="javascript:;">退出</a>
       </div>
       <div class="logo">智游教育</div>
-      <!-- <div class="back"><span class="glyphicon glyphicon-chevron-left"></span></div> -->
-      <!-- <div class="title">注册</div> -->
-      <!-- <div class="user">
-      <span>
-      <span class="glyphicon glyphicon-plus"></span>提问</span>&#x3000;
-      <span><span class="glyphicon glyphicon-user"></span>登陆</span>
-      </div> -->
       <div class="user">
-        <span>
+        <span class="asksrc">
       <span class="glyphicon glyphicon-plus"></span>提问</span>&#x3000;
-        <span class="user-name"><span class="glyphicon glyphicon-user"></span>尹学江</span>
+        <span class="user-name"><span class="glyphicon glyphicon-user"></span></span>
       </div>
     </nav>
   </div>
   <main>
     <ul class="messages">
-      <li class="ask">
-        <img src="images/photo1.jpg" alt="" class="user-photo fl" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="ask">
-        <img src="images/photo1.jpg" alt="" class="user-photo fl" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="ask">
-        <img src="images/photo1.jpg" alt="" class="user-photo fl" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="ask">
-        <img src="images/photo1.jpg" alt="" class="user-photo fl" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
-      <li class="answer">
-        <img src="images/photo_default.jpg" alt="" class="user-photo fr" width="64" height="64">
-        <h2 class="h2-title">哈哈哈哈哈哈</h2>
-        <p class="ptext">我是一名高中生</p>
-        <p class="ptime">2016-10-10 10:40</p>
-      </li>
     </ul>
   </main>
 </body>
-<script type="text/javascript">
-</script>
 
 </html>

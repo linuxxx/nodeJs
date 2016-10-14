@@ -2,8 +2,8 @@
 <html>
 
 <head>
-  <title>登录-问答首页</title>
   <meta charset="utf-8">
+  <title>登录-问答首页</title>
   <meta name="Keywords " content="$SiteKeywords " />
   <meta name="Description " content="$SiteDescription " />
   <link rel="stylesheet " type="text/css " href="css/bootstrap.min.css" />
@@ -14,28 +14,8 @@
   <script src='js/jquery.cookie.js'></script>
   <script src='js/popupInsert.js'></script>
   <script src='js/index.js'></script>
-  <script type="text/javascript">
-    $(function() {
-      $("form").submit(function(ev){
-        ev.preventDefault();
-        var data = $(this).serialize();
-        $.post("/user/login",data,function(res,statusText){
-          if(statusText == "success"){
-            console.log(res);
-            if(res.code == "success"){
-              $.cookie("name",res.data.name);
-              $.popup(res.content,function(){
-                location.href = "/index.html"
-              })
-            }else{
-              $.popup(res.content);
-            }
-          }
-        })
-
-      });
-    });
-  </script>
+  <!-- 当前页js -->
+  <script type="text/javascript" src="script/login.js"></script>
 </head>
 
 <body>
@@ -49,7 +29,7 @@
       </div>
       <div class="back"><span class="glyphicon glyphicon-chevron-left"></span></div>
       <div class="title">登录</div>
-      <div class="user"><span class="glyphicon glyphicon-home fs18"></span>
+      <div class="user"><a href="/register.html" class="reg">注册</span></a>
       </div>
     </nav>
   </div>
@@ -62,7 +42,7 @@
         <div class="form-group">
           <input type="password" name="password" class="form-control" required pattern="^.{6,16}$" placeholder="请输入密码">
         </div>
-        <input type="submit" class="btn btn-success form-control" value="登陆" data-toggle="modal" data-target="#myModal">
+        <input type="submit" class="btn btn-success form-control" value="登陆">
       </form>
     </div>
   </main>
