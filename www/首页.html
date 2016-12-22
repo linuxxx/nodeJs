@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>问答首页</title>
+  <meta name="Keywords " content="$SiteKeywords " />
+  <meta name="Description " content="$SiteDescription " />
+  <link rel="stylesheet " type="text/css " href="css/bootstrap.min.css" />
+  <link rel="stylesheet " type="text/css " href="css/globle.css " />
+  <link rel="stylesheet " type="text/css " href="css/popupInsert.css " />
+  <link rel="stylesheet " type="text/css " href="css/style.css " />
+  <script src='js/jquery-2.0.3.js'></script>
+  <script src='js/popupInsert.js'></script>
+  <script src='js/jquery.cookie.js'></script>
+  <script src='js/template.js'></script>
+  <!-- 公用js -->
+  <script src='js/index.js'></script>
+  <!-- 当前页js -->
+  <!--<script type="text/javascript" src="script/index.js"></script>-->
+</head>
+
+<body>
+  <div class="h50"></div>
+  <div id="nav">
+    <nav class="nav">
+      <!-- 用户下拉 -->
+      <div class="user-info" style="display: none">
+        <a href="javascript:;">个人资料</a>
+        <a href="javascript:;">退出</a>
+      </div>
+      <div class="logo">智游教育</div>
+      <div class="user">
+        <span class="asksrc">
+      <span class="glyphicon glyphicon-plus"></span>提问</span>&#x3000;
+        <span class="user-name"><span class="glyphicon glyphicon-user"></span></span>
+      </div>
+    </nav>
+  </div>
+  <main>
+    <ul class="messages">
+    </ul>
+  </main>
+  <script id="test" type="text/html">
+    {{each data as ask}}
+     {{include "ask-m" ask}}    
+      {{each ask.answer as answer}}      
+      {{include "answer-m" answer}}   
+      {{/each}}  
+    {{/each}}
+  </script>
+  <!-- 问题模板 -->
+  <script id="ask-m" type="text/html">
+    <li class="ask">
+      <img src="uploads/{{name}}.jpg" alt="" class="user-photo fl" width="64" height="64">
+      <h2 class="h2-title">{{name}}</h2>
+      <p class="ptext">{{content | formatContent}}</p>
+      <p class="ptime">{{time | formatTime}}</p>
+    </li>
+  </script>
+  <!-- 回答链接模板 -->
+  <script id="answer-m" type="text/html">
+    <li class="answer">
+      <img src="uploads/{{name}}.jpg" alt="" class="user-photo fr" width="64" height="64">
+      <h2 class="h2-title">{{name}}</h2>
+      <p class="ptext">{{content | formatContent}}</p>
+      <p class="ptime">{{time | formatTime}}</p>
+    </li>
+  </script>
+  <script type="text/javascript">
+   
+  
+  
+      var name = $.cookie("name");
+      if (name) {
+        $(".user-name").html('<span class="glyphicon glyphicon-user"></span>' + name).addClass("online");
+      } else {
+        $(".user-name").html('<span class="glyphicon glyphicon-user"></span>登陆');
+      }
+      // 控制用户下拉，如果同有登陆跳登陆页面
+      $("body").on("click", ".user-name", function() {
+        if ($(this).hasClass("online")) {
+          $(".user-info").css({
+            top: 50 + "px",
+            right: -7 + "px"
+          });
+          $(".user-info").slideToggle();
+        } else {
+          location.href = "/login.html";
+        }
+      });
+      $(".user-info a:first-child").click(function() {
+        location.href = "/upload.html";
+      });
+      $(".user-info a:last-child").click(function(event) {
+        $.cookie("name", name, {
+          expires: -1
+        });
+        $.popup("退出成功", function() {
+          location.href = "/index.html";
+        });
+      });
+      // 提问跳转
+      $(".asksrc").click(function() {
+        if (name) {
+          location.href = "/ask.html"
+        } else {
+          location.href = "/login.html"
+        }
+      })
+
+      // 点击某个问题事件
+      $(".messages").on("click", ".ask", function(e) {
+        // 获取问题的文件名
+        var querstion = $(this).attr("data-time");
+        // 把文件名写入cookie
+        $.cookie("querstion", querstion);
+        // 跳转回答问题页面
+        location.href = "/answer.html?querstion=" + querstion;
+      });
+      // 问答列表
+      $.getJSON("/querstions", function(res, status) {
+        if (status == "success") {
+          //所有问题的数据（包括回答）                  
+                  var html = template("test", res);
+                  $(".messages").html(html);            
+            }
+          });
+  </script>
+</body>
+
+</html>

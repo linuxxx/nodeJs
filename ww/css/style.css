@@ -1,0 +1,132 @@
+@charset "utf-8";
+.h50{
+    height: 50px;
+}
+/* 导航 公用*/
+#nav{
+    position: fixed; width: 100%; height: 50px; top: 0px;
+    /*background-color: #222;*/
+    background-color: #fff;
+    z-index: 1000;
+    background:url("/images/nav6.jpg");
+    background-repeat: repeat;
+    background-size:auto 100% ;
+    border-bottom: 1px solid #333;
+}
+.nav{
+    padding: 0 15px;
+    max-width: 960px;
+    min-width: 600px;
+    margin: 0 auto;
+    height: 50px;
+    position: relative;
+    /*color: #9d9d9d;*/
+    color: #333;
+}
+.nav .back,
+.nav .logo{
+    height: 30px; position: absolute; top: 10px; left: 15px;
+    font-size: 18px; line-height: 30px;
+}
+.nav .user{
+   height: 20px; position: absolute; top: 15px; right: 15px;
+   font-size: 14px; line-height: 20px;
+}
+.nav .user .fs18{ font-size: 18px; }
+.nav .title{
+    font-size:18px;
+    line-height: 50px;
+    text-align: center;
+}
+/* 用户下拉 */
+.user-info{
+    position: absolute;
+    border: 1px solid #cdcdcd; border-radius: 2px;
+    background-color: #fff; width: 158px; box-shadow:0px 0px 8px #aaa;
+}
+.user-info a{
+    border-bottom: 1px solid #e5e5e5;
+    display: block; text-align: right; padding-right: 20px;
+    font-size: 14px; color: #000;
+    height: 40px; line-height: 40px;
+    text-decoration: none;
+}
+.user-info a:last-child{
+    border-bottom: 0;
+}
+/* 主内容区 公用*/
+main{
+    padding:15px 50px;
+    max-width: 960px;
+    min-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    /*background-color: rgba(000, 000, 000, 0.2);*/
+}
+/* 用户留言内容 */
+.messages{ padding-top: 10px; }
+.messages li{
+position: relative;
+margin-bottom: 8px;
+
+}
+.messages li .user-photo{
+    width: 64px; height: 64px; border-radius: 50%;
+    overflow: hidden;
+}
+.messages li .h2-title{
+    margin: 0; padding: 0;
+    font-size: 16px; line-height: 28px; font-weight: 400;
+    color: #333;
+     font-family:Arial, "Microsoft YaHei"; 
+}
+.messages li .ptext{
+    font-size:14px; color: #333; line-height: 24px;
+}
+.messages li .ptime{
+    margin-top: 3px;
+    font-size:12px; color: #888; line-height: 22px;
+}
+.messages .ask{
+    padding:   20px;
+    padding-left: 94px;    
+    clear: both;
+}
+.messages .ask .user-photo{
+    position: absolute;
+    margin:  20px;
+    top: 5px;
+    left: 0;
+}
+.messages .answer{
+    float: right;
+    padding: 20px;
+    padding-right:  94px; 
+}
+.messages .answer .user-photo{
+    position: absolute;
+    margin:  20px;
+    top: 5px;
+    right: 0;
+}
+.messages::after{
+    display: block;
+    width: 0;
+    height: 0;
+    content: "";
+    clear: both
+}
+/* 提问表单 */
+.ask-content{
+    padding-top: 13px;
+}
+.ask-content .btn{
+    display: block;
+    width: 100%;
+}
+.ask,.answer{
+    width: 500px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: #fff;
+}

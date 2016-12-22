@@ -4,13 +4,14 @@ const express = require('express'),
   cookieParser = require('cookie-parser'),
   fs = require('fs'),
   app = express();
+const template = require("art-template");
 
 app.use(express.static('www'));
 var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, 'www/uploads');
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     // 在req加入一个属性file 等于一个file对象
     req.file = file;
     var name = req.cookies.name;
@@ -30,10 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var upload = multer({ storage: storage });
 app.use(cookieParser());
 
-app.get('', (req, res) => {
-  console.log('这是根目录');
-})
-
+var denglu=false;
 // 用户注册
 app.post('/user/register', (req, res) => {
   // 增加ip
@@ -51,7 +49,7 @@ app.post('/user/register', (req, res) => {
       var users = data.toString().trim();
       var douhao = users.length > 0 ? "," : "";
       var usersArr = JSON.parse("[" + users + "]");
-      var isIn = usersArr.some(function(ele) {
+      var isIn = usersArr.some(function (ele) {
         return (user.name == ele.name);
       })
       if (isIn) {
@@ -69,6 +67,10 @@ app.post('/user/register', (req, res) => {
     res.status(200).json({ "code": "error", "content": "密码输入不致！" });
   }
 });
+function third(req, res, next) {
+    
+    next();
+}
 // 用户登陆
 app.post('/user/login', (req, res) => {
   console.log(req.body);
@@ -76,11 +78,12 @@ app.post('/user/login', (req, res) => {
   fs.readFile("users/user.txt", (err, data) => {
     var users = data.toString().trim();
     var usersArr = JSON.parse("[" + users + "]");
-    var isIn = usersArr.some(function(ele) {
+    var isIn = usersArr.some(function (ele) {
       return (user.name == ele.name && user.password == ele.password)
     });
     if (isIn) {
-      res.status(200).json({ code: "success", content: "登陆成功！", data: user })
+      res.status(200).json({ code: "success", content: "登陆成功！", data: user });
+      denglu=true;
     } else {
       res.status(200).json({ code: "error", content: "用户名或密码不正确！" })
     }
@@ -162,7 +165,7 @@ app.get('/querstions', (req, res) => {
       files.reverse();
       // console.log(files);
       // 循环读出文件里内容加入querstions数组里
-      files.forEach(function(file) {
+      files.forEach(function (file) {
         fs.readFile("querstions/" + file, (err, data) => {
           if (!err) {
             // console.log(data.toString())
@@ -181,6 +184,7 @@ app.get('/querstions', (req, res) => {
   })
 
 });
+
 app.listen(3000, () => {
   console.log('服务器正常起动');
 })

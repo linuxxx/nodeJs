@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+{{include "share/head"}}
+<body>
+  <div class="h50"></div>
+  <div id="nav">
+    <nav class="nav">
+      <div class="back"><span class="glyphicon glyphicon-chevron-left"></span></div>
+      <div class="title">注册</div>
+      <div class="user"><span class="glyphicon glyphicon-home fs18"></span>
+      </div>
+    </nav>
+  </div>
+  <main>
+    <div class="ask-content">
+      <form action="/login" method="post">
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" required pattern="^[0-9a-zA-Z\u4e00-\u9fa5]{2,16}$" placeholder="请输入昵称">
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" class="form-control" required pattern="^.{6,16}$" placeholder="请输入密码">
+        </div>
+        <div class="form-group">
+          <input type="password" name="password01" class="form-control" required pattern="^.{6,16}$" placeholder="请再次输入密码">
+        </div>
+        <div class="form-group">
+          <input type="radio" name="sex" value="女士">女士
+          <br>
+          <input type="radio" name="sex" value="先生">先生
+        </div>
+        <div class="form-group">
+          <input type="text" name="email" class="form-control" required placeholder="请输入电子邮箱地址">
+        </div>
+        <div>
+          <select name="course" class="form-control">
+            <option value="HTML5">HTML5</option>
+            <option value="IOS">IOS</option>
+            <option value="Android">Android</option>
+          </select>
+          <br>
+        </div>
+        <input type="submit" class="btn btn-success form-control" value="注册" data-toggle="modal" data-target="#myModal">
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>

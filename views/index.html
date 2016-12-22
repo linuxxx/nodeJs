@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+{{include "share/head"}}
+
+<body>
+  <div class="h50"></div>
+  <div id="nav">
+    <nav class="nav">
+      <!-- 用户下拉 -->
+      <div class="user-info" style="display: none">
+        <a href="javascript:;">个人资料</a>
+        <a href="javascript:;">退出</a>
+      </div>
+      <div class="logo">智游教育</div>
+      <div class="user">
+        <span class="asksrc">
+      <span class="glyphicon glyphicon-plus"></span>提问</span>&#x3000;
+        <span class="user-name"><span class="glyphicon glyphicon-user"></span>{{name}}</span>
+      </div>
+    </nav>
+  </div>
+  <main>
+    <ul class="messages">
+      {{each data as ask}}
+      <li class="ask" data-id="{{ask.id}}">
+        <img src="{{ask.creatName.photo}}" alt="" class="user-photo fl" width="64" height="64" onerror="src='images/photo_default.jpg'">
+        <h2 class="h2-title">{{ask.creatName.name}}</h2>
+        <p class="ptext">{{ask.content}}</p>
+        <p class="ptime">{{ask.creatTime | formatTime}}</p>
+      </li>
+      {{each ask.answers as answer}}
+      <li class="answer">
+        <img src="{{answer.creatName.photo}}" alt="" class="user-photo" width="64" height="64" onerror="src='images/photo_default.jpg'">
+        <h2 class="h2-title">{{answer.creatName.name}}</h2>
+        <p class="ptext">{{answer.content}}</p>
+        <p class="ptime">{{answer.creatTime | formatTime}}</p>
+      </li>
+      {{/each}} {{/each}}
+    </ul>
+  </main>
+</body>
+
+</html>

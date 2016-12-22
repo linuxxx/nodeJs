@@ -41,13 +41,16 @@ function formatContent(val) {
   return str;
 }
 
-$(function() {
+$(function () {
   // 返回一步
-  $(".back").click(function() {
+  $(".back").click(function () {
     history.go(-1);
   })
 });
 // 尺寸发改变时
-window.onresize = function() {
+window.onresize = function () {
 
 }
+
+template.helper("formatTime", formatTime);
+template.helper("formatContent", formatContent);    
