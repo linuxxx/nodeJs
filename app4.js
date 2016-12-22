@@ -1,21 +1,30 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
     multer = require('multer'),
-    fs = require('fs'),
+    cookieParser = require('cookie-parser')
+fs = require('fs'),
     db = require('./db/db.js'),
     app = express();
 const template = require("art-template");
 app.use(express.static('ww'));
-var deng = false;
-var login_name = '';
-var _id = '';
+app.use(cookieParser());
+var deng = {};
+
 function denglu(req, res, next) {
-    if (deng) {
-        next();
+    console.log(req.cookies._id)
+    if (!!req.cookies._id) {
+        db.User.findById(req.cookies._id, function (err, data) {
+            if (!err) {
+                if (!!data) {
+                    next();
+                }
+            }
+        });
     } else {
         res.redirect(`/login`)
     }
 }
+
 function formatTime(val) {
     if (!val) {
         return "";
@@ -43,8 +52,8 @@ var storage = multer.diskStorage({
     filename: function (req, file, cb) {
         // 在req加入一个属性file 等于一个file对象
         req.file = file;
-        var name = login_name;
-        var id = _id;
+        var name = req.cookies.user;
+        var id = req.cookies._id;
         // console.log(file);
         if (file.mimetype == "image/jpeg") {
             var extension = ".jpg";
@@ -53,7 +62,9 @@ var storage = multer.diskStorage({
         } else if (file.mimetype == "image/gif") {
             var extension = ".gif";
         }
-        var photo = { photo: "/uploads/" + name + extension };
+        var photo = {
+            photo: "/uploads/" + name + extension
+        };
         db.User.findByIdAndUpdate(id, photo, function (err) {
             if (!err) {
                 cb(null, name + extension);
@@ -62,8 +73,12 @@ var storage = multer.diskStorage({
     }
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
-var upload = multer({ storage: storage });
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+var upload = multer({
+    storage: storage
+});
 
 // 用户注册
 app.post('/user/register', (req, res) => {
@@ -79,39 +94,63 @@ app.post('/user/register', (req, res) => {
         user.photo = 'images/photo_default.jpg';
         console.log(user);
         // 读取用户文件
-        db.User.find({ name: user.name }).select('name').exec(function (err, data) {
+        db.User.find({
+            name: user.name
+        }).select('name').exec(function (err, data) {
             if (!err) {
                 if (data.length > 0) {
-                    res.status(200).json({ "code": "error", "content": "用户名已存在！" });
+                    res.status(200).json({
+                        "code": "error",
+                        "content": "用户名已存在！"
+                    });
                 } else {
                     new db.User(user).save((err) => {
                         if (!err) {
-                            res.status(200).json({ "code": "success", "content": "恭喜，注册成功！" });
+                            res.status(200).json({
+                                "code": "success",
+                                "content": "恭喜，注册成功！"
+                            });
                         }
                     })
                 }
             }
         })
     } else {
-        res.status(200).json({ "code": "error", "content": "密码输入不一致！" });
+        res.status(200).json({
+            "code": "error",
+            "content": "密码输入不一致！"
+        });
     }
 });
 // 用户登陆
 app.post('/user/login', (req, res) => {
     var user = req.body;
     // 读取用户文件
-    db.User.find({ name: user.name }).exec(function (err, data) {
+    db.User.find({
+        name: user.name
+    }).exec(function (err, data) {
         if (!err) {
             if (data.length == 0) {
-                res.status(200).json({ "code": "error", "content": "用户名不存在！" });
+                res.status(200).json({
+                    "code": "error",
+                    "content": "用户名不存在！"
+                });
             } else {
                 if (user.password == data[0].password) {
-                    res.status(200).json({ code: "success", content: "登陆成功！", data: user })
-                    deng = true;
-                    login_name = user.name;
-                    _id = data[0]._id;;
+                    deng[user.name] = true;
+                    res.cookie("user", user.name);
+                    var _id = data[0]._id;
+                    res.cookie("_id", _id);
+                    res.status(200).json({
+                        code: "success",
+                        content: "登陆成功！",
+                        data: user
+                    })
                 } else {
-                    res.status(200).json({ code: "error", content: "用户名或密码不正确！" })
+                    res.status(200).json({
+                        code: "error",
+                        content: "用户名或密码不正确！"
+                    })
                 }
             }
         }
@@ -121,7 +160,10 @@ app.post('/user/login', (req, res) => {
 // 用户上传头像
 app.post('/user/photo', upload.single("photo"), (req, res) => {
     if (req.file.mimetype == "image/jpeg") {
-        res.status(200).json({ code: "success", content: "上传头像成功！" })
+        res.status(200).json({
+            code: "success",
+            content: "上传头像成功！"
+        })
     }
 });
 // 用户提交问题
@@ -137,31 +179,39 @@ app.post('/user/ask', (req, res) => {
         return val;
     }
     question.content = req.body.content;
-    question.creatName = _id;
+    question.creatName = req.cookies._id;
     question.ip = formatIp(req.ip);
     question.creatTime = new Date().getTime();
     console.log(question);
     new db.Question(question).save((err) => {
         if (!err) {
-            res.status(200).json({ code: "success", content: "提问成功！" })
+            res.status(200).json({
+                code: "success",
+                content: "提问成功！"
+            })
         }
     });
 });
 // 用户回答问题
 app.post('/user/answer', (req, res) => {
     var answer = req.body;
-    answer.creatName = _id;
+    answer.creatName = req.cookies._id;
     answer.ip = req.ip;
-    answer.creatTime = new Date().getTime(); 
+    answer.creatTime = new Date().getTime();
     var answers = {};
     new db.Answer(answer).save((err, product) => {
         if (!err) {
             answers.answers = product._id;
-            db.Question.findByIdAndUpdate(answer.question, { $addToSet: answers }, function (err, data) {
+            db.Question.findByIdAndUpdate(answer.question, {
+                $addToSet: answers
+            }, function (err, data) {
                 if (!err) {
                     //问题的对象  
                     console.log('回答更新成功');
-                    res.status(200).json({ code: "success", content: "回答问题成功！" })
+                    res.status(200).json({
+                        code: "success",
+                        content: "回答问题成功！"
+                    })
                 }
             })
 
@@ -180,18 +230,25 @@ template.config('Cache', false);
 app.engine('.html', template.__express);
 
 app.set("view engine", 'html');
-// 未登陆状态
+// 
 app.get('/', (req, res) => {
-    login_name = '';
-    deng = false;
     console.log('刷新页面');
-    db.Question.find().populate({ path: 'creatName', select: '-password' }).populate({ path: 'answers', populate: { path: 'creatName', select: '-password' } }).exec(function (err, data) {
+    db.Question.find().populate({
+        path: 'creatName',
+        select: '-password'
+    }).populate({
+        path: 'answers',
+        populate: {
+            path: 'creatName',
+            select: '-password'
+        }
+    }).exec(function (err, data) {
         if (!err) {
             data.sort(down);
-            if (login_name == '') {
+            if (!req.cookies.user) {
                 username = '登陆';
             } else {
-                username = login_name;
+                username = req.cookies.user;
             }
             res.render('index', {
                 code: "success",
@@ -200,32 +257,10 @@ app.get('/', (req, res) => {
                 data: data,
                 name: username
             })
-            console.log(login_name);
         }
     })
 })
-// 问答列表
-app.get('/on', (req, res) => {
-    console.log('刷新页面');
-    db.Question.find().populate({ path: 'creatName', select: '-password' }).populate({ path: 'answers', populate: { path: 'creatName', select: '-password' } }).exec(function (err, data) {
-        if (!err) {
-            data.sort(down);
-            if (login_name == '') {
-                username = '登陆';
-            } else {
-                username = login_name;
-            }
-            res.render('index', {
-                code: "success",
-                title: '问答社区-首页',
-                script: 'index',
-                data: data,
-                name: username
-            })
-            console.log(login_name);
-        }
-    })
-})
+
 app.get('/zhuce', (req, res) => {
     res.render('register', {
         title: '问答社区-注册',
@@ -256,6 +291,7 @@ app.get('/login', (req, res) => {
         script: 'login'
     });
 });
+
 function down(x, y) {
     return (x.creatTime < y.creatTime) ? 1 : -1
 }

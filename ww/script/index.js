@@ -27,6 +27,8 @@ $(function () {
       expires: -1
     });
     $.popup("退出成功", function () {
+      $.cookie('user',null,{expires: -1});
+      $.cookie('_id',null,{expires: -1});
       location.href = "/";
     });
   });

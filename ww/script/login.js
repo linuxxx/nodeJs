@@ -7,7 +7,7 @@ $(function() {
         console.log(res);
         if (res.code == "success") {          
           $.popup(res.content, function() {
-            location.href = "/on"
+            location.href = "/"
           })
         } else {
           $.popup(res.content);
