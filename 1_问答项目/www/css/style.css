@@ -1,0 +1,22 @@
+        nav .col-xs-4{
+            line-height: 50px;
+            color: #9d9d9d;
+            font-size: 16px;                      
+        }
+        nav .col-xs-4 a{
+            text-decoration: none;  
+            color: #9d9d9d;
+            /*cursor: pointer;*/
+        }
+        main {
+            margin-top: 65px;
+            min-width: 400px;
+        }
+        .media-left img,.media-right img{
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+        }
+        .time{
+            color: #888;
+        }

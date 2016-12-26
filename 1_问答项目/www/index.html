@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="冯文秀">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>问答社区</title>
+    <!--第一步：导入核心bootstrap样式文件-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet " type="text/css " href="css/popupInsert.css " />
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container dropdown">
+            <div class="row">
+                <a class="navbar-brand" href="#">问答社区</a>
+                <div class="navbar-text pull-right text-right">
+                    <span id="ask"><span class="glyphicon glyphicon-plus"></span> 提问</span>&#x3000;
+                    <span class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user"></span>
+                    <span id="user">登陆</span>
+                    </span>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="text-right" href="上传头像.html">个人资料</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a class="text-right">退出</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <main>
+        <div class="container">
+            <ul class="media-list">
+            </ul>
+        </div>
+    </main>
+    <!--第二步：导入依赖的jquery脚本文件-->
+    <script src="js/jquery.js"></script>
+    <!--第三步：导入核心bootstrap脚本文件-->
+    <script src="js/bootstrap.js"></script>
+    <script src='js/jquery.cookie.js'></script>
+    <script src='js/popupInsert.js'></script>
+    <script>
+        $(function() { 
+          // 加载页面
+          (function (){ 
+          // 加载姓名 自执行函数
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState == 4) {
+                if (xhr.status == 200) { 
+                  // xhr.responseText;
+                var stuName = JSON.parse(xhr.responseText); 
+                stuName.forEach(function(ele,ind){                                                    
+                  $('.media-list').prepend( '<li class="media ask"><a class="media-left" href="#"><img src="img/'+ele.name+'.png" ></a><div class="media-body"><h4 class="media-heading">'+ele.name+'</h4><p class="ask-text">'+ele.text+'</p><p class="time">'+ele.time+'</p></div></li>');                   
+                  ele.answer.forEach(function(ele2,ind2){
+                   $($('.ask>.media-body')[0]).append( '<div class="media answer"><div class="media-body"><h4 class="media-heading">'+ele2.name+'</h4><p class="ans-text">'+ele2.text+'</p><p class="time">'+ele2.time+'</p></div><a class="media-right" href="#"><img src="img/'+ele2.name+'.png" ></a></div>'); 
+                    })
+                    $(".media-list img").attr("onerror","this.src='img/0.jpg'") 
+                })  
+                
+                   moren();  
+                }
+               }
+            }
+            
+        // 提交方式post 
+          xhr.open('POST','/user/index', true);
+          xhr.send(null);
+        })();
+            
+          function moren(){  
+            if($.cookie('user')=='null'){
+                $('#user').html('登陆');                 
+            }else{               
+            $('#user').html($.cookie('user'));
+            }
+            if($('#user').html()=='登陆'){
+                $(".dropdown-toggle").click(function(event) {                    
+                    $(".dropdown-menu").hide();
+                    location.href="登陆.html";
+                  });
+                $("#ask,.ask-text").click(function(event) { 
+                  $.popup("请登陆",function(){                 
+                    location.href="登陆.html";
+                   });
+               });
+             }else{
+              $("#ask").click(function(event) {                             
+                location.href="提问.html";
+              }); 
+              $(".ask .ask-text").each(function(ind,ele){
+                 $(this).click(function(event) {                             
+                  $.cookie('ind', $(".ask").length-ind-1);
+                  location.href="回答.html";
+                  }); 
+              });  
+             $(".dropdown-menu li:last-child").click(function(event) {
+                $.popup("退出成功",function(){
+                    $.cookie('user',null)
+                    location.href="index.html";
+                   });
+                 });  
+              }  
+             $("#ask,.dropdown-toggle,.dropdown-menu,.ask-text").css('cursor','pointer');
+           }
+     });
+    </script>
+</body>
+
+</html>

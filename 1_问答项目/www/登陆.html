@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="冯文秀">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登陆</title>
+    <!--第一步：导入核心bootstrap样式文件-->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet " type="text/css " href="css/popupInsert.css " />
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <span class="col-xs-4"><a class="glyphicon glyphicon-chevron-left" href="index.html"></a></span>
+            <span class="col-xs-4 text-center">登陆</span>
+            <span class="col-xs-4 text-right"><a class="glyphicon glyphicon-plus-sign" href="注册.html"></a></span>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input type="text" id="name" name="name" class="form-control" placeholder="请填写昵称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input type="password" id="pass" name="pass" class="form-control" placeholder="请填写密码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-success col-xs-12">登陆</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+    <!--第二步：导入依赖的jquery脚本文件-->
+    <script src="js/jquery.js"></script>
+    <!--第三步：导入核心bootstrap脚本文件-->
+    <script src="js/bootstrap.js"></script>    
+    <script src='js/popupInsert.js'></script>
+    <script>
+         $('.btn').click(function (){
+          // 加载姓名 自执行函数
+         var xhr = new XMLHttpRequest();
+         var data = new FormData();
+         var name = $('#name').val();
+         var pass = $('#pass').val();
+         data.append('name',name);
+         data.append('pass',pass);
+          var i=0; 
+          $('input').each(function(ind,ele){                         
+          if($(ele).val()==''){
+                $.popup("登陆失败<p style='font-size:16px;'>"+$(ele).attr('placeholder')+"</p>",function(){});
+                return false;
+             }    
+              i=ind+1;          
+         }) 
+         console.log(i); 
+        if(i==$('input').length){
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState == 4) {
+                if (xhr.status == 200) {                   
+                      if(xhr.responseText=='true'){                           
+                            $.popup("登陆成功",function(){
+                                location.href="index.html";
+                            });                     
+                      }else{
+                           $.popup("登陆失败<p style='font-size:16px;'>用户名或密码输入错误</p>",function(){ });  
+                      }
+                   }
+                }
+            }            
+        // 提交方式post 
+          xhr.open('POST', '/user/denglu', true);
+          xhr.send(data);
+        }
+        });
+    </script>
+</body>
+
+</html>

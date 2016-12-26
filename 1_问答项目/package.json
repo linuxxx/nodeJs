@@ -1,0 +1,16 @@
+{
+  "name": "9.30-node.js",
+  "version": "1.0.0",
+  "description": "\u001b留言",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts":{
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "\u001b冯文秀",
+  "license": "ISC"
+}
