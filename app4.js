@@ -1,8 +1,8 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
     multer = require('multer'),
-    cookieParser = require('cookie-parser')
-fs = require('fs'),
+    cookieParser = require('cookie-parser'),
+    fs = require('fs'),
     db = require('./db/db.js'),
     app = express();
 const template = require("art-template");
